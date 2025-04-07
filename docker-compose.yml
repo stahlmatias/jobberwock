@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  jobberwocky-api:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./logs:/app/logs
+    environment:
+      EXTERNAL_API_URL: http://external-mock:8080/jobs
+    depends_on:
+      - external-mock
+
+  external-mock:
+    build:
+      context: ./jobberwocky-extra-source-v2
+    ports:
+      - "8081:8080"
+
