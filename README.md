@@ -29,12 +29,10 @@ Jobberwocky is a lightweight job posting service that aggregates job offers from
   - Clean code using PEP8, SOLID principles.
   - Logging to console and file (`logs/jobberwocky.log`).
 
-To run tests:
-```bash
-pytest
+API will be available at:
 ```
-
-## Deployment
+http://localhost:8000/docs
+```
 
 ### Quick Start (Dev)
 Make sure Docker and Docker Compose are installed.
@@ -43,9 +41,9 @@ Make sure Docker and Docker Compose are installed.
 docker-compose up --build
 ```
 
-API will be available at:
-```
-http://localhost:8000/docs
+To run tests:
+```bash
+pytest
 ```
 
 ---
@@ -74,10 +72,12 @@ http://localhost:8000/docs
 ├── ci.yml
 └── RELEASE.md
 ```
+---
 
 ## External Job Source
 The project includes a mock job source under `jobberwocky-extra-source-v2/`, also Dockerized for integration testing.
 
+---
 
 ## API Usage (with `curl`)
 
