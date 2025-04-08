@@ -78,3 +78,93 @@ http://localhost:8000/docs
 ## External Job Source
 The project includes a mock job source under `jobberwocky-extra-source-v2/`, also Dockerized for integration testing.
 
+
+## API Usage (with `curl`)
+
+### Create a New Job
+
+```bash
+curl -X POST http://localhost:8000/jobs/ \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "DevOps Engineer",
+    "description": "Automate deployments and manage infrastructure",
+    "company": "Cloud Corp",
+    "salary": 95000,
+    "country": "USA",
+    "skills": ["CI/CD", "Docker", "Kubernetes"]
+}'
+```
+
+### List All Internal Jobs
+
+```bash
+curl http://localhost:8000/jobs/
+```
+
+### Search Jobs by Title
+
+```bash
+curl "http://localhost:8000/jobs/search?name=DevOps"
+```
+
+###  Get Job by ID
+
+```bash
+curl http://localhost:8000/jobs/1
+```
+
+### Update a Job by ID
+
+```bash
+curl -X PUT http://localhost:8000/jobs/1 \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Senior DevOps Engineer",
+    "description": "Manage CI/CD, infra, and IaC",
+    "company": "Cloud Corp",
+    "salary": 115000,
+    "country": "USA",
+    "skills": ["CI/CD", "Docker", "Kubernetes", "Terraform"]
+}'
+```
+
+### Search by title
+
+```bash
+curl "http://localhost:8000/jobs/search?name=DevOps"
+
+### Search by country
+
+```bash
+curl "http://localhost:8000/jobs/search?country=USA"
+```
+
+### Search by minimum salary
+
+```bash
+curl "http://localhost:8000/jobs/search?salary_min=90000"
+```
+
+### Combined search: title + country
+
+```bash
+curl "http://localhost:8000/jobs/search?name=DevOps&country=USA"
+```
+
+### Combined search: title + salary
+
+```bash
+curl "http://localhost:8000/jobs/search?name=DevOps&salary_min=100000"
+```
+
+### Combined search: country + salary
+
+```bash
+curl "http://localhost:8000/jobs/search?country=Canada&salary_min=80000"
+```
+### Combined search: title + country + salary
+
+```bash
+curl "http://localhost:8000/jobs/search?name=Engineer&country=UK&salary_min=90000"
+```
