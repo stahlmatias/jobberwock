@@ -133,6 +133,7 @@ curl -X PUT http://localhost:8000/jobs/1 \
 
 ```bash
 curl "http://localhost:8000/jobs/search?name=DevOps"
+```
 
 ### Search by country
 
