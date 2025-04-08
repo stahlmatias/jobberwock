@@ -1,6 +1,13 @@
 import logging
 from app.schemas import Job, JobCreate
-from app.storage.memory import add_job, find_jobs_by_filters
+from app.storage.memory import (
+    add_job,
+    find_jobs_by_filters,
+    get_job_by_id as memory_get_job_by_id,
+    update_job_by_id as memory_update_job_by_id,
+    delete_job_by_id as memory_delete_job_by_id,
+)
+
 from app.services.external_sources import get_external_jobs
 
 logger = logging.getLogger(__name__)
@@ -25,4 +32,13 @@ def find_jobs(**filters) -> list[Job]:
         external = []
 
     return internal + external
+
+def get_job_by_id(job_id: int) -> Job | None:
+    return memory_get_job_by_id(job_id)
+
+def update_job_by_id(job_id: int, job_data: JobCreate) -> Job | None:
+    return memory_update_job_by_id(job_id, job_data)
+
+def delete_job_by_id(job_id: int) -> bool:
+    return memory_delete_job_by_id(job_id)
 

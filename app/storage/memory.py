@@ -19,17 +19,15 @@ def get_job_by_id(job_id: int) -> Optional[Job]:
             return job
     return None
 
-def update_job(job_id: int, updated_data: dict) -> Optional[Job]:
-    for job in job_db:
+def update_job_by_id(job_id: int, job_data: JobCreate) -> Optional[Job]:
+    for i, job in enumerate(job_db):
         if job.id == job_id:
-            for field, value in updated_data.items():
-                if hasattr(job, field):
-                    setattr(job, field, value)
-            return job
+            updated_job = Job(id=job_id, **job_data.model_dump())
+            job_db[i] = updated_job
+            return updated_job
     return None
 
-def delete_job(job_id: int) -> bool:
-    global job_db
+def delete_job_by_id(job_id: int) -> bool:
     for job in job_db:
         if job.id == job_id:
             job_db.remove(job)
