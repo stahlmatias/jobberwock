@@ -34,13 +34,23 @@ def delete_job_by_id(job_id: int) -> bool:
             return True
     return False
 
-def find_jobs_by_filters(name: str = None, country: str = None, salary_min: int = None) -> List[Job]:
+def find_jobs_by_filters(**filters) -> List[Job]:
     results = job_db
+
+    name = filters.get("name")
     if name:
         results = [job for job in results if name.lower() in job.title.lower()]
+
+    country = filters.get("country")
     if country:
         results = [job for job in results if job.country.lower() == country.lower()]
+
+    salary_min = filters.get("salary_min")
     if salary_min is not None:
         results = [job for job in results if job.salary >= salary_min]
-    return results
 
+    company = filters.get("company")
+    if company:
+        results = [job for job in results if company.lower() in job.company.lower()]
+
+    return results
