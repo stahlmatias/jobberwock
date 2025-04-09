@@ -96,7 +96,7 @@ curl -X POST http://localhost:8000/jobs/ \
 }'
 ```
 
-### List All Internal Jobs
+### List All Jobs
 
 ```bash
 curl http://localhost:8000/jobs/
@@ -129,10 +129,10 @@ curl -X PUT http://localhost:8000/jobs/1 \
 }'
 ```
 
-### Search by title
+### Search by name
 
 ```bash
-curl "http://localhost:8000/jobs/search?name=DevOps"
+ curl "http://localhost:8000/jobs/search?name=Engineer"
 ```
 
 ### Search by country
@@ -153,19 +153,19 @@ curl "http://localhost:8000/jobs/search?salary_min=90000"
 curl "http://localhost:8000/jobs/search?name=DevOps&country=USA"
 ```
 
-### Combined search: title + salary
+### Combined search: name + salary
 
 ```bash
-curl "http://localhost:8000/jobs/search?name=DevOps&salary_min=100000"
+curl "http://localhost:8000/jobs/search?name=DevOps&salary_min=10000"
 ```
 
 ### Combined search: country + salary
 
 ```bash
-curl "http://localhost:8000/jobs/search?country=Canada&salary_min=80000"
+curl "http://localhost:8000/jobs/search?country=USA&salary_min=80000"
 ```
-### Combined search: title + country + salary
+### Combined search: name + country + salary
 
 ```bash
-curl "http://localhost:8000/jobs/search?name=Engineer&country=UK&salary_min=90000"
+curl "http://localhost:8000/jobs/search?name=Engineer&country=USA&salary_min=70000"
 ```

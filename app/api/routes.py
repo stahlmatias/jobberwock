@@ -26,9 +26,14 @@ def list_jobs():
     return find_jobs()
 
 @router.get("/jobs/search")
-def search_jobs(name: str = None):
-    logger.info(f"Searching jobs with name={name}")
-    results = find_jobs(name=name)
+def search_jobs(name: str = None, salary_min: int = None, salary_max: int = None, country: str = None):
+    logger.info(f"Searching jobs with filters: name={name}, salary_min={salary_min}, salary_max={salary_max}, country={country}")
+    results = find_jobs(
+        name=name,
+        salary_min=salary_min,
+        salary_max=salary_max,
+        country=country,
+    )
     return {"results": results}
 
 @router.get("/jobs/{job_id}", response_model=Job)

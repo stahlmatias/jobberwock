@@ -6,20 +6,16 @@ import httpx
 
 client = TestClient(app)
 
-mock_response = [
-    {
-        "title": "DevOps Engineer",
-        "description": "Automate all the things.",
-        "company": "CI/CD Inc",
-        "salary": 110000,
-        "country": "Germany",
-        "skills": ["Docker", "Kubernetes"]
-    }
-]
-
 def test_cache_saves_result(monkeypatch):
-    # Limpiar cache al principio
+    # Clear cache at the beginning
     external_cache.clear()
+
+    # Correct format for external API response
+    mock_response = {
+        "Germany": [
+            ["DevOps Engineer", 110000, "<skills><skill>Docker</skill><skill>Kubernetes</skill></skills>"]
+        ]
+    }
 
     def mock_get(*args, **kwargs):
         class MockResponse:
