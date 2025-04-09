@@ -22,7 +22,7 @@ def create_job_route(job: JobCreate):
 
 @router.get("/jobs/", response_model=List[Job])
 def list_jobs():
-    logger.info("Listing internal jobs")
+    logger.info("Listing jobs")
     return find_jobs()
 
 @router.get("/jobs/search")

@@ -1,11 +1,11 @@
 from app.services.cache import external_cache, get_cache_key
 from app.schemas import JobCreate
 import logging
-import httpx  # 👈 Usamos httpx en lugar de requests
+import httpx
 
 logger = logging.getLogger(__name__)
 
-EXTERNAL_API_URL = "http://jobberwocky-extra-source-v2:3000/jobs"
+EXTERNAL_API_URL = "http://external-mock:8080/jobs"
 
 def get_external_jobs(name=None, country=None, salary_min=None) -> list[JobCreate]:
     filters = {"name": name, "country": country, "salary_min": salary_min}
@@ -23,11 +23,31 @@ def get_external_jobs(name=None, country=None, salary_min=None) -> list[JobCreat
         data = response.json()
         jobs = []
 
-        for job_dict in data:
-            try:
-                jobs.append(JobCreate(**job_dict))  # No tiene ID
-            except Exception as e:
-                logger.warning(f"Invalid job from external API: {e}")
+        # Handle both dict-by-country and flat list response formats
+        if isinstance(data, dict):
+            for country_name, job_list in data.items():
+                for job in job_list:
+                    try:
+                        title, salary, skills = job
+                        job_dict = {
+                            "title": title,
+                            "salary": salary,
+                            "skills": skills,
+                            "company": "",  # Default or inferred if needed
+                            "description": "",
+                            "country": country_name
+                        }
+                        jobs.append(JobCreate(**job_dict))
+                    except Exception as e:
+                        logger.warning(f"Invalid job format in dict: {e}")
+        elif isinstance(data, list):
+            for job in data:
+                try:
+                    jobs.append(JobCreate(**job))
+                except Exception as e:
+                    logger.warning(f"Invalid job format in list: {e}")
+        else:
+            logger.warning(f"Unexpected data format from external API: {type(data)}")
 
         external_cache[cache_key] = jobs
         return jobs

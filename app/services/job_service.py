@@ -24,7 +24,8 @@ def find_jobs(**filters) -> list[Job]:
         external = []
         for job in external_raw:
             try:
-                external.append(JobCreate(**job))
+                job_obj = JobCreate(**job)
+                external.append(Job(**job_obj.dict(), id=-1))  # Agregamos ID dummy
             except Exception as e:
                 logger.warning(f"Skipping invalid external job: {e}")
     except Exception as e:
